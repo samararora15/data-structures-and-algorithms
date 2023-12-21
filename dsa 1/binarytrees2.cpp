@@ -87,6 +87,76 @@ void bfs(struct node *temp)
         }
     }
 }
+void iterativepreorder(struct node *temp)
+{
+    stack<struct node*> s;
+    s.push(temp);
+    while(!s.empty())
+    {
+        auto a = s.top();
+        s.pop();
+        cout<<a->data<<" ";
+        if(a->right)
+        {
+            s.push(a->right);
+        }
+        if(a->left)
+        {
+            s.push(a->left);
+        }
+    }
+}
+void iterativeinorder(struct node *temp)
+{
+    stack<struct node *>s;
+    s.push(temp);
+    while(!s.empty())
+    {
+        auto a = s.top();
+        if(a->left)
+        {
+            s.push(a->left);
+            a->left = NULL;
+        }
+        else
+        {
+            cout<<a->data<<" ";
+            s.pop();
+            if(a->right)
+            {
+                s.push(a->right);
+                a->right = NULL;
+            }
+        }   
+    }
+}
+void iterativepostorder(struct node *temp)
+{
+    stack<struct node *>s;
+    s.push(temp);
+    while(!s.empty())
+    {
+        auto a = s.top();
+        if(a->left)
+        {
+            s.push(a->left);
+            a->left = NULL;
+        }
+        else
+        {
+            if(a->right)
+            {
+                s.push(a->right);
+                a->right = NULL;
+            }
+            else
+            {
+                cout<<a->data<<" ";
+                s.pop();
+            }
+        }   
+    }
+}
 int main()
 {
     struct node *root = createNode(1);
@@ -107,6 +177,9 @@ int main()
     // invert(root);
     // preordertraversal(root);
     // leafnodes(root);
-    bfs(root);
+    // bfs(root);
+    // iterativepreorder(root);
+    // iterativeinorder(root);
+    iterativepostorder(root);
     return 0;
 }
