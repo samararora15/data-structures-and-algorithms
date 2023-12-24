@@ -157,15 +157,49 @@ void iterativepostorder(struct node *temp)
         }   
     }
 }
+bool isbst(int l, int r, struct node *temp)
+{
+    if(temp==NULL)  return true;
+    if(temp->data<l || temp->data>r)    return false;
+    if(isbst(l,temp->data,temp->left) && isbst(temp->data,r,temp->right))   return true;
+    return false;
+}
+int searchBST(struct node *temp, int val)
+{
+    if(temp==NULL)  return -1;
+    if(temp->data==val)  return temp->data;
+    if(temp->data>val)   return searchBST(temp->left,val);
+    if(temp->data<val)   return searchBST(temp->right,val);
+    return -1;
+}
+struct node * insertBST(struct node* temp, int val)
+{
+    if(temp==NULL)
+    {
+        temp = createNode(val);
+        return temp;
+    }
+    if(temp->data>val)  temp->left = insertBST(temp->left,val);
+    if(temp->data<val)  temp->right = insertBST(temp->right,val);  
+    return temp;
+}
 int main()
 {
-    struct node *root = createNode(1);
+    //normal tree
+    // struct node *root = createNode(1);
+    // root->left = createNode(2);
+    // root->right = createNode(3);
+    // root->left->left = createNode(4);
+    // root->left->right = createNode(5);
+    // root->right->left = createNode(6);
+    // root->right->right = createNode(7);
+
+    //bst
+    struct node *root = createNode(4);
     root->left = createNode(2);
-    root->right = createNode(3);
-    root->left->left = createNode(4);
-    root->left->right = createNode(5);
-    root->right->left = createNode(6);
-    root->right->right = createNode(7);
+    root->right = createNode(7);
+    root->left->left = createNode(1);
+    root->left->right = createNode(3);
 
     // preordertraversal(root);
     // cout<<endl;
@@ -180,6 +214,13 @@ int main()
     // bfs(root);
     // iterativepreorder(root);
     // iterativeinorder(root);
-    iterativepostorder(root);
+    // iterativepostorder(root);
+    // cout<<isbst(INT_MIN, INT_MAX, root);
+
+    int val;
+    cin>>val;
+    // cout<<searchBST(root,val);
+    insertBST(root,val);
+    inordertraversal(root);
     return 0;
 }
