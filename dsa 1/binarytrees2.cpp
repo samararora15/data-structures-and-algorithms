@@ -164,6 +164,25 @@ bool isbst(int l, int r, struct node *temp)
     if(isbst(l,temp->data,temp->left) && isbst(temp->data,r,temp->right))   return true;
     return false;
 }
+bool issametree(struct node *p, struct node *q)
+{
+    if(p==NULL && q==NULL)  return true;
+    if((p==NULL && q!=NULL) || (p!=NULL && q==NULL))    return false;
+    if(p->data!=q->data)    return false;
+    return issametree(p->left,q->left) && issametree(p->right,q->right);
+}
+bool isMirror(struct node *rootleft, struct node *rootright)
+    {
+        if(rootleft==NULL && rootright==NULL)   return true;
+        if((rootleft!=NULL && rootright==NULL) || (rootleft==NULL) && rootright!=NULL)   return false;
+        if(rootleft->data!=rootright->data) return false;
+        return isMirror(rootleft->left,rootright->right) && isMirror(rootleft->right, rootright->left);
+    }
+bool issymmetric(struct node *root)
+{
+    if(root==NULL)  return true;
+    return isMirror(root->left,root->right);
+}
 int searchBST(struct node *temp, int val)
 {
     if(temp==NULL)  return -1;
@@ -186,20 +205,20 @@ struct node * insertBST(struct node* temp, int val)
 int main()
 {
     //normal tree
-    // struct node *root = createNode(1);
-    // root->left = createNode(2);
-    // root->right = createNode(3);
-    // root->left->left = createNode(4);
-    // root->left->right = createNode(5);
-    // root->right->left = createNode(6);
-    // root->right->right = createNode(7);
+    struct node *root = createNode(1);
+    root->left = createNode(2);
+    root->right = createNode(2);
+    root->left->left = createNode(3);
+    root->left->right = createNode(4);
+    root->right->left = createNode(4);
+    root->right->right = createNode(3);
 
     //bst
-    struct node *root = createNode(4);
-    root->left = createNode(2);
-    root->right = createNode(7);
-    root->left->left = createNode(1);
-    root->left->right = createNode(3);
+    // struct node *root = createNode(4);
+    // root->left = createNode(2);
+    // root->right = createNode(7);
+    // root->left->left = createNode(1);
+    // root->left->right = createNode(3);
 
     // preordertraversal(root);
     // cout<<endl;
@@ -216,11 +235,12 @@ int main()
     // iterativeinorder(root);
     // iterativepostorder(root);
     // cout<<isbst(INT_MIN, INT_MAX, root);
+    // cout<<issametree(p,q);
+    cout<<issymmetric(root);
 
-    int val;
-    cin>>val;
+    // int val;
+    // cin>>val;
     // cout<<searchBST(root,val);
-    insertBST(root,val);
-    inordertraversal(root);
+    // insertBST(root,val);
     return 0;
 }
