@@ -202,16 +202,71 @@ struct node * insertBST(struct node* temp, int val)
     if(temp->data<val)  temp->right = insertBST(temp->right,val);  
     return temp;
 }
+vector<double> averageoflevels(struct node *temp)
+{
+    queue<struct node *> q;
+    vector<double> v;
+    double sum = 0;
+    q.push(temp);
+    while(!q.empty())
+    {
+        int s = q.size();
+        int k = s;
+        while(s--)
+        {
+            struct node *t = q.front();
+            q.pop();
+            sum += t->data;
+            if(t->left) q.push(t->left);
+            if(t->right)    q.push(t->right); 
+        }
+        v.push_back(sum/k);
+        sum = 0;
+    }
+    return v;
+}
+vector<int> topview(struct node *temp)
+{
+    vector<int> ans;
+    if(temp==NULL)
+    return ans;
+
+    map<int,int> mp;
+    queue<pair<struct node*,int>> q;
+
+    q.push(make_pair(temp,0));
+    while(!q.empty())
+    {
+        pair<struct node*,int> p = q.front();
+        q.pop();
+        struct node* n = p.first;
+        int hd = p.second;
+
+        if(mp.find(hd)==mp.end())
+        // mp.insert({hd,n->data});
+        mp[hd] = n->data;
+
+        if(n->left)
+        q.push(make_pair(n->left,hd-1));
+        if(n->right)
+        q.push(make_pair(n->right,hd+1));
+    }
+    for(auto i:mp)
+    {
+        ans.push_back(i.second);
+    }
+    return ans;
+}
 int main()
 {
     //normal tree
     struct node *root = createNode(1);
     root->left = createNode(2);
-    root->right = createNode(2);
-    root->left->left = createNode(3);
-    root->left->right = createNode(4);
-    root->right->left = createNode(4);
-    root->right->right = createNode(3);
+    root->right = createNode(3);
+    root->left->left = createNode(4);
+    root->left->right = createNode(5);
+    root->right->left = createNode(6);
+    root->right->right = createNode(7);
 
     //bst
     // struct node *root = createNode(4);
@@ -236,7 +291,13 @@ int main()
     // iterativepostorder(root);
     // cout<<isbst(INT_MIN, INT_MAX, root);
     // cout<<issametree(p,q);
-    cout<<issymmetric(root);
+    // cout<<issymmetric(root);
+    // vector<double> v = averageoflevels(root);
+    vector<int> v = topview(root);
+    for(int i=0;i<v.size();i++)
+    {
+        cout<<v[i]<<" ";
+    }
 
     // int val;
     // cin>>val;
