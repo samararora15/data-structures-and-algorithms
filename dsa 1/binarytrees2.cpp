@@ -257,16 +257,94 @@ vector<int> topview(struct node *temp)
     }
     return ans;
 }
+vector<struct node *> leftview(struct node *temp)
+{
+    vector<struct node *> v;
+    if(temp==NULL)
+    {
+        return v;
+    }
+    queue<struct node *> q;
+    q.push(temp);
+    while(!q.empty())
+    {
+        int s = q.size();
+        struct node *t = q.front();
+        v.push_back(t);
+        while(s--)
+        {
+            struct node *k = q.front();
+            q.pop();
+            if(k->left) 
+            q.push(k->left);
+            if(k->right)
+            q.push(k->right);
+        }
+    }
+    return v;
+}
+vector<struct node *> rightview(struct node *temp)
+{
+    vector<struct node *> v;
+    if(temp==NULL)
+    {
+        return v;
+    }
+    queue<struct node *> q;
+    q.push(temp);
+    while(!q.empty())
+    {
+        int s = q.size();
+        struct node *t = q.front();
+        v.push_back(t);
+        while(s--)
+        {
+            struct node *k = q.front();
+            q.pop();
+            if(k->right)
+            q.push(k->right);
+            if(k->left) 
+            q.push(k->left);
+        }
+    }
+    return v;
+}
+vector<int> maxrowvalue(struct node *temp)
+{
+    vector<int> v;
+    if(temp==NULL)
+    return v;
+    queue<struct node*>q;
+    int rmax = INT8_MIN;
+    q.push(temp);
+    while(!q.empty())
+    {
+        int s = q.size();
+        while(s--)
+        {
+            struct node *k = q.front();
+            q.pop();
+            rmax = max(rmax,k->data);
+            if(k->left)
+            q.push(k->left);
+            if(k->right)
+            q.push(k->right);
+        }
+        v.push_back(rmax);
+        rmax = INT8_MIN;
+    }
+    return v;
+}
 int main()
 {
     //normal tree
-    struct node *root = createNode(1);
-    root->left = createNode(2);
-    root->right = createNode(3);
-    root->left->left = createNode(4);
-    root->left->right = createNode(5);
-    root->right->left = createNode(6);
-    root->right->right = createNode(7);
+    struct node *root = createNode(4);
+    root->left = createNode(3);
+    root->right = createNode(5);
+    root->left->left = createNode(2);
+    root->left->right = createNode(1);
+    root->left->right->left = createNode(6);
+    root->left->right->right = createNode(7);
 
     //bst
     // struct node *root = createNode(4);
@@ -293,12 +371,11 @@ int main()
     // cout<<issametree(p,q);
     // cout<<issymmetric(root);
     // vector<double> v = averageoflevels(root);
-    vector<int> v = topview(root);
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-
+    // vector<int> v = topview(root);
+    // vector<struct node *> v = leftview(root);
+    // vector<struct node *> v = rightview(root);
+    vector<int> v = maxrowvalue(root);
+    
     // int val;
     // cin>>val;
     // cout<<searchBST(root,val);
