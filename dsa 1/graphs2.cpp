@@ -4,6 +4,27 @@ const int N = 1e3+10;
 vector<int> graph[N];
 bool vis[N];
 vector<pair<pair<int,int>,int>> eg;
+queue<int> q;
+void bfs(int node)
+{
+    q.push(node);
+    vis[node] = 1;
+    
+    while(!q.empty())
+    {
+        int top = q.front();
+        cout<<top<<" ";
+        q.pop();
+        for(auto it:graph[top])
+        {
+            if(!vis[it])
+            {
+                q.push(it);
+                vis[it] = 1;
+            }
+        }
+    }
+}
 void dfs(int node)
 {
     vis[node] = 1;
@@ -93,6 +114,7 @@ int main()
     addedge(4,8);
     addedge(5,6);
     addedge(5,7);
-    dfs(1);
+    // dfs(1);
+    bfs(1);
     return 0;
 }
