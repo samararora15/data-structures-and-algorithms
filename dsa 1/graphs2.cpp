@@ -5,6 +5,29 @@ vector<int> graph[N];
 bool vis[N];
 vector<pair<pair<int,int>,int>> eg;
 queue<int> q;
+void getislands(int r, int c, vector<vector<int>> &g)
+{
+    if(r<0 || c<0 || r==g.size() || c==g.size())  return;
+    if(g[r][c]==0)  return;
+    g[r][c] = 0;
+    getislands(r-1,c,g);   //top
+    getislands(r,c-1,g);   //left
+    getislands(r,c+1,g);   //right
+    getislands(r+1,c,g);   //bottom
+}
+int findCircleNum(vector<vector<int>>& graph)
+{
+    int ans=0;
+    for(int i=0;i<graph.size();i++) {
+        for(int j=0;j<graph.size();j++) {
+            if(graph[i][j]==1) {
+                ans++;
+                getislands(i,j,graph);
+            }
+        }
+    }
+    return ans;
+}
 void bfs(int node)
 {
     q.push(node);
@@ -44,7 +67,7 @@ void addedge(int v1, int v2)
     graph[v1].push_back(v2);
     graph[v2].push_back(v1);
 }
-void displayedgelist(int e)
+void createedgelist(int e)
 {
     for(int i=0;i<e;i++)
     {
@@ -58,7 +81,7 @@ void displayedgelist(int e)
         cout<<eg[i].first.first<<" "<<eg[i].first.second<<" "<<eg[i].second<<endl;
     }
 }
-void displaylist(int vertices, int edges)
+void createlist(int vertices, int edges)
 {
     int v = vertices;
     int e = edges;
@@ -69,16 +92,16 @@ void displaylist(int vertices, int edges)
         graph[v1].push_back(v2);
         graph[v2].push_back(v1);
     }
-    for(int i=0;i<=v;i++)
-    {
-        for(auto it:graph[i])
-        {
-            cout<<it<<" ";
-        }
-        cout<<endl;
-    }
+    // for(int i=0;i<=v;i++)
+    // {
+    //     for(auto it:graph[i])
+    //     {
+    //         cout<<it<<" ";
+    //     }
+    //     cout<<endl;
+    // }
 }
-void displaymatrix(int vertices,int edges)
+void creatematrix(int vertices,int edges)
 {
     int v = vertices;
     int e = edges;
@@ -104,17 +127,32 @@ int main()
 {
     int v,e;
     // cin>>v>>e;
-    // displaymatrix(v,e);
-    // displaylist(v,e);
-    // displayedgelist(e);
-    addedge(1,2);
-    addedge(1,3);
-    addedge(2,4);
-    addedge(3,5);
-    addedge(4,8);
-    addedge(5,6);
-    addedge(5,7);
+    // creatematrix(v,e);
+    // createlist(v,e);
+    // createedgelist(e);
+    // addedge(1,2);
+    // addedge(1,3);
+    // addedge(2,4);
+    // addedge(3,5);
+    // addedge(4,8);
+    // addedge(5,6);
+    // addedge(5,7);
+    // addedge(8,9);
     // dfs(1);
-    bfs(1);
+    // bfs(1);
+
+    // int cc=0;
+    // for(int i=1;i<=v;i++)
+    // {
+    //     if(!vis[i])
+    //     {
+    //         cc++;
+    //         dfs(i);
+    //     }
+    // }
+    // cout<<cc;
+
+    vector<vector<int>> graph = {{1,0,0},{0,1,0},{0,0,1}};
+    cout<<findCircleNum(graph);
     return 0;
 }
