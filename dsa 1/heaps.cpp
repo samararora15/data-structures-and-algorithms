@@ -5,6 +5,73 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int getMaximumScore(int a, int b, int c)
+{
+    int ans=0;
+    priority_queue<int> pq;
+    pq.push(a);
+    pq.push(b);
+    pq.push(c);
+    int x,y;
+    while(pq.size()>1) {
+        x = pq.top();
+        x--;
+        pq.pop();
+        y = pq.top();
+        y--;
+        pq.pop();
+        ans++;
+        if(x>0) pq.push(x);
+        if(y>0) pq.push(y);                   
+    }
+    return ans;
+}
+
+int pickGifts(vector<int>&gifts, int k)
+{
+    priority_queue<long long> maxh;
+    for(int i=0;i<gifts.size();i++) {
+        maxh.push(gifts[i]);
+    }
+    while(k>0) {
+        long long a = sqrt(maxh.top());
+        maxh.pop();
+        maxh.push(a);
+        k--;
+    }
+    long long ans=0;
+    while(!maxh.empty()){
+        ans = ans + maxh.top();
+        maxh.pop();
+    }
+    return ans;
+}
+
+int lastStoneWeight(vector<int> &stones)
+{
+    if(stones.size()==1) {
+            return stones[0];
+        }
+        priority_queue<int> maxh;
+        for(int i=0;i<stones.size();i++) {
+            maxh.push(stones[i]);
+        }
+        while(!maxh.empty()) {
+            int y = maxh.top();
+            maxh.pop();
+            int x = maxh.top();
+            maxh.pop();
+            if(x!=y) {
+                y = y-x;
+                maxh.push(y);
+            }
+            if(maxh.size()==1) {
+                return maxh.top();
+            }
+        }
+        return 0;
+}
+
 void sumofelementsbwk1andk2smallest(int arr[], int size, int k1, int k2)
 {
     priority_queue<int> maxh;
@@ -208,11 +275,11 @@ int kthsmallestnumber(int arr[], int size, int k)
 }
 int main()
 {
-    int arr[] = {4,2,2,3,1,1,4,1,1,2,1,3};
-    int size = sizeof(arr)/sizeof(arr[0]);
-    int k1,k2;
-    cout<<"enter k1 && k2:";
-    cin>>k1>>k2;
+    // int arr[] = {4,2,2,3,1,1,4,1,1,2,1,3};
+    // int size = sizeof(arr)/sizeof(arr[0]);
+    // int k1,k2;
+    // cout<<"enter k1 && k2:";
+    // cin>>k1>>k2;
     //cout<<kthsmallestnumber(arr,size,k);
     //returnklargestnumbers(arr,size,k);
     //nearlysortedorksorted(arr,size,k);
@@ -220,6 +287,14 @@ int main()
     //topkfrequentnumbers(arr,size,k);
     //frequencysort(arr,size);
     //kclosestpointstoorigin(arr,size,k);
-    sumofelementsbwk1andk2smallest(arr,size,k1,k2);
+    // sumofelementsbwk1andk2smallest(arr,size,k1,k2);
+
+    // vector<int> v = {2,7,4,1,8,1};
+    // int k = 3;
+    // cout<<lastStoneWeight(weight);
+    // cout<<pickGifts(v,k);
+
+    int a = 3,b=5,c=4;
+    cout<<getMaximumScore(a,b,c);
     return 0;
 }

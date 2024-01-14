@@ -125,7 +125,7 @@ void creatematrix(int vertices,int edges)
 }
 int main()
 {
-    int v,e;
+    // int v,e;
     // cin>>v>>e;
     // creatematrix(v,e);
     // createlist(v,e);
@@ -152,7 +152,17 @@ int main()
     // }
     // cout<<cc;
 
-    vector<vector<int>> graph = {{1,0,0},{0,1,0},{0,0,1}};
-    cout<<findCircleNum(graph);
+    // vector<vector<int>> graph = {{1,0,0},{0,1,0},{0,0,1}};
+    // cout<<findCircleNum(graph);
+
+    vector<vector<int>> v = {{1,-2},{2,0},{1,-1}};
+    vector<int> t = {0,-1};
+    v.push_back(t);
+    for(int i=0;i<v.size();i++) {
+        for(int j=0;j<v[i].size();j++) {
+            cout<<v[i][j]<<" ";
+        }
+        cout<<endl;
+    }
     return 0;
 }
