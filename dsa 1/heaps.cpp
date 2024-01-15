@@ -5,6 +5,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int getMaxProduct(vector<int>&nums)
+{
+    priority_queue<int> maxh;
+    for(int i=0;i<nums.size();i++) {
+        maxh.push(nums[i]);
+    }
+    int a = maxh.top();
+    maxh.pop();
+    int b = maxh.top();
+    maxh.pop();
+    return (a-1)*(b-1);
+}
+
 int getMaximumScore(int a, int b, int c)
 {
     int ans=0;
@@ -289,12 +302,13 @@ int main()
     //kclosestpointstoorigin(arr,size,k);
     // sumofelementsbwk1andk2smallest(arr,size,k1,k2);
 
-    // vector<int> v = {2,7,4,1,8,1};
+    vector<int> v = {1,5,4,5};
     // int k = 3;
     // cout<<lastStoneWeight(weight);
     // cout<<pickGifts(v,k);
 
-    int a = 3,b=5,c=4;
-    cout<<getMaximumScore(a,b,c);
+    // int a = 3,b=5,c=4;
+    // cout<<getMaximumScore(a,b,c);
+    cout<<getMaxProduct(v);
     return 0;
 }
