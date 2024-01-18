@@ -1,102 +1,64 @@
 #include<bits/stdc++.h>
 using namespace std;
 struct node{
-    int data;
+    int val;
     struct node *next;
 };
+struct node *removeElements(struct node *head, int val) {
+    if(head==nullptr) {
+            return head;
+        }
+        while(head!=nullptr && head->val==val) {
+            head = head->next;
+        }
+        struct node *p=head;
+        struct node *q=head;
+        while(p!=nullptr) {
+            if(p->val==val) {
+                q->next=p->next;
+                p=q->next;
+            }
+            else {
+                q=p;
+                p=p->next;
+            }
+        }
+    return head;
+}
+struct node *insertFront(struct node *head, int val) {
+    struct node *front = new node;
+    front->val = val;
+    front->next = head;
+    head = front;
+    return head;
+}
+struct node *insertBack(struct node *back, int val) {
+    struct node *last = new node;
+    last->val = val;
+    last->next=nullptr;
+    while(back->next!=nullptr) {
+        back=back->next;
+    }
+    back->next=last;
+    return last;
+}
+void printNode(struct node *head) {
+    while(head!=nullptr) {
+        cout<<head->val<<" ";
+        head=head->next;
+    }
+}
 int main()
 {
-    struct node *head=NULL;
-    struct node *cur,*temp,*k,*p;
-    bool val = 1;
-    //implementation of singly linked list
-    while(val) {
-        cur = (struct node*)malloc(sizeof(struct node));
-        cin>>cur->data;
-        cur->next=NULL;
-        if(head==NULL) {
-            head = temp = cur;
-        }
-        else {
-            temp->next = cur;
-            temp = temp->next;
-        }
-        cin>>val;
-    }
-    //display
-    // while(head!=NULL) {
-    //     cout<<head->data<<" ";
-    //     head = head->next;
-    // }
-
-    cout<<endl;
-    //insertion of node at beginning
-    temp = (struct node*)malloc(sizeof(struct node));
-    cout<<"enter beginning node:";
-    cin>>temp->data;
-    temp->next = head;
-    head = temp;
-    k = head;
-    p = head;
-    //display
-    // while(head!=NULL) {
-    //     cout<<head->data<<" ";
-    //     head = head->next;
-    // }
-
-    cout<<endl;
-    //insertion of node at end
-    temp = (struct node*)malloc(sizeof(struct node));
-    cout<<"ente ending node:";
-    cin>>temp->data;
-    temp->next = NULL;
-    while(k->next!=NULL) {
-        k = k->next;
-    }
-    k->next = temp;
-    k = head;
-    // while(head!=NULL) {
-    //     cout<<head->data<<" ";
-    //     head = head->next;
-    // }
-
-    cout<<endl;
-    //insertion of node at middle
-    // int c=0;
-    // while(k!=NULL) {
-    //     c++;
-    //     k=k->next;
-    // }
-    // c=c/2;
-    // temp = (struct node*)malloc(sizeof(struct node));
-    // cout<<"ente middle node:";
-    // cin>>temp->data;
-    // while(c>0) {
-    //     p = p->next;
-    //     c--;
-    // }
-    // struct node *q;
-    // q=p;
-    // temp->next = p->next;
-    // q->next = temp;
-    while(k!=NULL) {
-        cout<<k->data<<" ";
-        k = k->next;
-    }
-    k = head;
-
-    cout<<endl;
-    //deletion of node from beginning
-    head=head->next;
-    //deletion of node from end
-    while(k->next->next!=NULL) {
-        k = k->next;
-    }
-    k->next = NULL;
-    k = head;
-    while(k!=NULL) {
-        cout<<k->data<<" ";
-        k=k->next;
-    }
+    struct node *head=nullptr,*back=nullptr,*start=nullptr;
+    head=insertFront(head,2);
+    head=insertFront(head,1);
+    back=insertBack(head,6);
+    back=insertBack(back,3);
+    back=insertBack(back,4);
+    back=insertBack(back,5);
+    back=insertBack(back,6);
+    struct node *list = removeElements(head,6);
+    printNode(head);
     return 0;
 }
