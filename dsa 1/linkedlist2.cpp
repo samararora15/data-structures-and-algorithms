@@ -42,6 +42,50 @@ struct node *insertBack(struct node *back, int val) {
     back->next=last;
     return last;
 }
+struct node *reverseList(struct node *head) {
+    if(head==nullptr || head->next==nullptr) {
+        return head;
+    }
+    struct node *p=nullptr,*q=head,*r=head->next;
+    while(r!=nullptr) {
+        q->next = p;
+        p = q;
+        q = r;
+        r=r->next;
+    }
+    q->next = p;
+    head = q;
+    return head;
+}
+struct node *middleNode(struct node *head) {
+    struct node *p = head;
+    int c=0;
+    while(p!=nullptr) {
+        c++;
+        p=p->next;
+    }
+    c=c/2;
+    while(c>0) {
+        head=head->next;
+        c--;
+    }
+    return head;
+}
+bool hasCycle(struct node *head) {
+    if(head==nullptr || head->next==nullptr) {
+        return false;
+    }
+    struct node *p,*q;
+    p=head;
+    q=head;
+    while(q!=nullptr && q->next!=nullptr) {
+        p=p->next;
+        q=q->next->next;  
+        if(p==q)
+        return true;
+    }
+    return false;
+}
 void printNode(struct node *head) {
     while(head!=nullptr) {
         cout<<head->val<<" ";
@@ -58,7 +102,10 @@ int main()
     back=insertBack(back,4);
     back=insertBack(back,5);
     back=insertBack(back,6);
-    struct node *list = removeElements(head,6);
-    printNode(head);
+    // struct node *list = removeElements(head,6);
+    // printNode(head);
+    // cout<<hasCycle(head);
+    // struct node *middle=middleNode(head);
+    reverseList(head);
     return 0;
 }
