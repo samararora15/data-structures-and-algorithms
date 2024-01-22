@@ -4,6 +4,41 @@ struct node{
     int val;
     struct node *next;
 };
+struct node *mergeTwoLists(struct node *list1, struct node *list2) {
+    if(list1==nullptr)  return list2;
+    if(list2==nullptr)  return list1;
+    struct node *head=list2;
+    if(list1->val<list2->val) {
+        head=list1;
+        list1=list1->next;
+    }
+    else{
+        list2=list2->next;
+    }
+    struct node *cur=head;
+    while(list1!=nullptr && list2!=nullptr) {
+        if(list1->val<list2->val) {
+            cur->next=list1;
+            list1=list1->next;
+        }
+        else{
+            cur->next=list2;
+            list2=list2->next;
+        }
+        cur=cur->next;
+    }
+    while(list1!=nullptr){
+        cur->next=list1;
+        list1=list1->next;
+        cur=cur->next;
+    }
+    while(list2!=nullptr){
+        cur->next=list2;
+        list2=list2->next;
+        cur=cur->next;
+    }
+    return head;
+}
 struct node *removeElements(struct node *head, int val) {
     if(head==nullptr) {
             return head;
@@ -97,8 +132,7 @@ int main()
     struct node *head=nullptr,*back=nullptr,*start=nullptr;
     head=insertFront(head,2);
     head=insertFront(head,1);
-    back=insertBack(head,6);
-    back=insertBack(back,3);
+    back=insertBack(head,3);
     back=insertBack(back,4);
     back=insertBack(back,5);
     back=insertBack(back,6);
@@ -107,5 +141,6 @@ int main()
     // cout<<hasCycle(head);
     // struct node *middle=middleNode(head);
     reverseList(head);
+    // head1=mergeTwoLists(head,head1);
     return 0;
 }
