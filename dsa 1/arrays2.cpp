@@ -2,6 +2,71 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+void setZeroes(vector<vector<int>> &arr)
+{
+    int r=arr.size();//rows
+    int a1[r];
+    int c=arr[0].size();//columns
+    int a2[c];
+    memset(a1,-1,sizeof(a1));
+    memset(a2,-1,sizeof(a2));
+    for(int i=0;i<arr.size();i++){
+        for(int j=0;j<arr[0].size();j++){
+            if(arr[i][j]==0){
+                a1[i]=0;
+                a2[j]=0;
+            }
+        }
+    }
+    for(int i=0;i<arr.size();i++){
+        for(int j=0;j<arr[0].size();j++){
+            if(a1[i]==0 || a2[j]==0)
+            arr[i][j]=0;
+        }
+    }
+    for(int i=0;i<arr.size();i++){
+        for(int j=0;j<arr[0].size();j++){
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+
+void rotateImage(vector<vector<int>> &arr)
+{
+    int r=arr[0].size()-1;
+    int c=arr[0].size()-1;
+    for(int i=0;i<arr[0].size();i++)
+    {
+        for(int j=0;j<=i;j++)
+        {
+            int k = arr[i][j];
+            arr[i][j]=arr[j][i];
+            arr[j][i]=k;
+        }
+    }
+    for(int i=0;i<arr[0].size();i++)
+    {
+        for(int j=0;j<=(arr[0].size()-1)/2;j++)
+        {
+            int k = arr[i][j];
+            arr[i][j]=arr[i][c];
+            arr[i][c]=k;
+            c--;
+        }
+        c=arr[0].size()-1;
+
+    }
+    for(int i=0;i<arr[0].size();i++)
+    {
+        for(int j=0;j<arr[0].size();j++)
+        {
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+
 void printallsubarrays(int arr[], int size)
 {
     for(int i=0;i<size;i++)
@@ -178,8 +243,8 @@ int main()
 {
     //int arr[] = {1,2,0,1,2,2,2,0,1,2,0,2,2,1,0,2,2};
 
-    int arr[] = {1,2,3,4};
-    int size = sizeof(arr)/sizeof(arr[0]);
+    // int arr[] = {1,2,3,4};
+    // int size = sizeof(arr)/sizeof(arr[0]);
 
     //int target;
     //cout<<"enter target:";
@@ -200,7 +265,16 @@ int main()
 
     //cout<<kadanealgo(arr,size);
 
-    printallsubarrays(arr,size);
+    // printallsubarrays(arr,size);
+
+    vector<vector<int>> arr = {
+        {1,1,1},
+        {1,0,1},
+        {1,1,1}
+    };
+    // rotateImage(arr);
+
+    setZeroes(arr);
 
     return 0;
 }
