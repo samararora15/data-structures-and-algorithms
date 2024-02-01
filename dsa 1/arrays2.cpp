@@ -2,6 +2,21 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+vector<int> replaceElements(vector<int>&arr)
+{
+    int n=arr.size();
+    vector<int> ans;
+    int prev=arr[n-1];
+    ans.push_back(-1);
+    for(int i=n-2;i>=0;i--){
+        ans.push_back(prev);
+        if(arr[i]>prev)
+        prev=arr[i];
+    }
+    sort(ans.begin(),ans.end(),greater<int>());
+    return ans;
+}
+
 void setZeroes(vector<vector<int>> &arr)
 {
     int r=arr.size();//rows
@@ -267,14 +282,16 @@ int main()
 
     // printallsubarrays(arr,size);
 
-    vector<vector<int>> arr = {
-        {1,1,1},
-        {1,0,1},
-        {1,1,1}
-    };
+    // vector<vector<int>> arr = {
+    //     {1,1,1},
+    //     {1,0,1},
+    //     {1,1,1}
+    // };
     // rotateImage(arr);
 
-    setZeroes(arr);
+    vector<int> arr = {2,3,11,8,9,10};
+
+    vector<int> ans=replaceElements(arr);
 
     return 0;
 }
